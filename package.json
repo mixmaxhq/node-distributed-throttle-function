@@ -1,0 +1,14 @@
+{
+  "name": "node-distributed-throttle-function",
+  "version": "0.0.1",
+  "description": "Distributed throttle() function (like Underscore) built in Redis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brad Vogel <brad@mixmax.com> (https://mixmax.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "node-redis-scripty": "0.0.5"
+  }
+}
