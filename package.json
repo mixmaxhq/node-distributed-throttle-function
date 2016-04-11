@@ -1,6 +1,6 @@
 {
   "name": "node-distributed-throttle-function",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Distributed throttle() function (like Underscore) built in Redis",
   "main": "index.js",
   "scripts": {
