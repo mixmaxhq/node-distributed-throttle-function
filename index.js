@@ -18,7 +18,7 @@ module.exports = function(redis) {
           if (err) return throttleFn(err);
 
           // If being throttled, wait for its expiration and try to run once more.
-          if (expiresIn > 0) {
+          if (expiresIn >= 0) {
             if (!noRetry) {
               setTimeout(function() {
                 throttle(key, throttleFn, ttl, true /* No retry */ );
