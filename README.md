@@ -24,7 +24,7 @@ var redisConnection = redis.createClient(port, hostname, {
 
 var throttle = distributedThrottle(redisConnection);
 
-throttle('my10secThrottedFunction', function(err) {
+throttle('my10secThrottledFunction', function(err) {
 	if (err) {
 		console.log('error!', err);
 		return;
@@ -34,7 +34,7 @@ throttle('my10secThrottedFunction', function(err) {
 }, 10 * 1000 /* 10 sec */);
 
 // If you want to cancel it such that the next invocation will fire immediately.
-throttle.cancel('my10secThrottedFunction', function(err){
+throttle.cancel('my10secThrottledFunction', function(err){
   if (err) {
     console.log('error!', err);
   } 
