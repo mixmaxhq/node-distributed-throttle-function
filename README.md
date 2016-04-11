@@ -19,18 +19,18 @@ var hostname = 'localhost';
 var password = '';
 
 var redisConnection = redis.createClient(port, hostname, {
-	auth_pass: password
+  auth_pass: password
 };
 
 var throttle = distributedThrottle(redisConnection);
 
 throttle('my10secThrottedFunction', function(err) {
-	if (err) {
-		console.log('error!', err);
-		return;
-	}
+  if (err) {
+    console.log('error!', err);
+    return;
+  }
 
-	console.log('this function will be called at most once every 10 seconds.');
+  console.log('this function will be called at most once every 10 seconds.');
 }, 10 * 1000 /* 10 sec */);
 
 // If you want to cancel it such that the next invocation will fire immediately.
