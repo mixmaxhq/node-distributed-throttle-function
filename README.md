@@ -1,6 +1,6 @@
 ## Distributed Throttle
 
-This module allows you to throttle the invocation of a function (just like [Underscore#throttle](http://underscorejs.org/#throttle)) atomically across distributed system. It is built on top of Redis. It will currently always call the function on the leading edge and the trailing edge, just like Underscore's default implementation.
+This module allows you to throttle the invocation of a function (just like [Underscore#throttle](http://underscorejs.org/#throttle)) across a distributed system. It is built on top of Redis. It will currently always call the function on the leading edge and the trailing edge, just like Underscore's default implementation.
 
 ## Installing 
 
@@ -24,7 +24,7 @@ var redisConnection = redis.createClient(port, hostname, {
 
 var throttle = distributedThrottle(redisConnection);
 
-throttle('my10secThrottedFunction', function(err) => {
+throttle('my10secThrottedFunction', function(err) {
 	if (err) {
 		console.log('error!', err);
 		return;
@@ -34,7 +34,11 @@ throttle('my10secThrottedFunction', function(err) => {
 }, 10 * 1000 /* 10 sec */);
 
 // If you want to cancel it such that the next invocation will fire immediately.
-throttle.cancel('my10secThrottedFunction');
+throttle.cancel('my10secThrottedFunction', function(err){
+  if (err) {
+    console.log('error!', err);
+  } 
+});
 
 ```
 
