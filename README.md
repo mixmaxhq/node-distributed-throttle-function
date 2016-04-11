@@ -4,11 +4,13 @@ This module allows you to throttle the invocation of a function (just like [Unde
 
 ## Installing 
 
-`npm install node-distributed-throttle-function`
+```bash
+npm install node-distributed-throttle-function
+```
 
 ## Using
 
-```
+```js
 var distributedThrottle = require('node-distributed-throttle-function');
 var redis = require('redis');
 
