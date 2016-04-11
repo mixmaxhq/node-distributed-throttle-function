@@ -24,16 +24,18 @@ var redisConnection = redis.createClient(port, hostname, {
 
 var throttle = distributedThrottle(redisConnection);
 
+// This function will be called immediately unless it has been called less than 10 seconds ago.
+// In that case, it will be called in 10 seconds—unless some _other_ call has happened in that interval.
 throttle('my10secThrottledFunction', function(err) {
   if (err) {
     console.log('error!', err);
     return;
   }
 
-  console.log('this function will be called at most once every 10 seconds.');
+  console.log('This function will be called at most once (possibly zero times) within the next 10 seconds.');
 }, 10 * 1000 /* 10 sec */);
 
-// If you want to cancel it such that the next invocation will fire immediately.
+// If you want to cancel any pending call such that the next invocation will fire immediately.
 throttle.cancel('my10secThrottledFunction', function(err){
   if (err) {
     console.log('error!', err);
