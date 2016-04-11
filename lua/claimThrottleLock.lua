@@ -8,7 +8,7 @@ local ttl = ARGV[1]
 
 local value = redis.call("SET", key, "", "NX", "PX", ttl)
 
--- If we were the first to set the value, return a sentinel value of 0.
+-- If we were the first to set the value, return a sentinel value.
 if value then
 	return -2
 end
