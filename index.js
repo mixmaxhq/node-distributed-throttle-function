@@ -32,6 +32,9 @@ module.exports = function(redis) {
     );
   };
 
+  // Create an alias.
+  throttle.call = throttle;
+
   throttle.cancel = function(key, callback) {
     redis.del(makeRedisKey(key), callback);
   };

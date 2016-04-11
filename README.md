@@ -24,7 +24,7 @@ var redisConnection = redis.createClient(port, hostname, {
 
 var throttle = distributedThrottle(redisConnection);
 
-throttle('my10secThrottedFunction', function(err) {
+throttle.call('my10secThrottedFunction', function(err) {
 	if (err) {
 		console.log('error!', err);
 		return;
