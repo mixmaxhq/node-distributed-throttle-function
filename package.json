@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Brad Vogel <brad@mixmax.com> (https://mixmax.com/)",
+  "author": "Mixmax <admin@mixmax.com> (https://mixmax.com/)",
   "license": "MIT",
   "dependencies": {
     "node-redis-scripty": "0.0.5"
