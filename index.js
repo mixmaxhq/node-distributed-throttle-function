@@ -1,13 +1,13 @@
-var Scripty = require('node-redis-scripty');
+const Scripty = require('node-redis-scripty');
 
 function makeRedisKey(key) {
   return key + ':throttle';
 }
 
 module.exports = function(redis) {
-  var scripty = new Scripty(redis);
+  const scripty = new Scripty(redis);
 
-  var throttle = function(key, throttleFn, ttl, noRetry /* Private */) {
+  function throttle(key, throttleFn, ttl, noRetry /* Private */) {
     scripty.loadScriptFile('claimThrottleLock', __dirname + '/lua/claimThrottleLock.lua', function(
       err,
       claimThrottleLock
@@ -29,7 +29,7 @@ module.exports = function(redis) {
         }
       });
     });
-  };
+  }
 
   // Create an alias.
   throttle.call = throttle;
