@@ -8,27 +8,26 @@ module.exports = function(redis) {
   const scripty = new Scripty(redis);
 
   function throttle(key, throttleFn, ttl, noRetry /* Private */) {
-    scripty.loadScriptFile('claimThrottleLock', __dirname + '/lua/claimThrottleLock.lua', function(
-      err,
-      claimThrottleLock
-    ) {
-      if (err) return throttleFn(err);
+    scripty.loadScriptFile(
+      'claimThrottleLock',
+      `${__dirname}/lua/claimThrottleLock.lua`,
+      (err, claimThrottleLock) => {
+        if (err) return void throttleFn(err);
 
-      claimThrottleLock.run(1, makeRedisKey(key), ttl, function(err, expiresIn) {
-        if (err) return throttleFn(err);
+        claimThrottleLock.run(1, makeRedisKey(key), ttl, (err, expiresIn) => {
+          if (err) return void throttleFn(err);
 
-        // If being throttled, wait for its expiration and try to run once more.
-        if (expiresIn >= 0) {
-          if (!noRetry) {
-            setTimeout(function() {
-              throttle(key, throttleFn, ttl, true /* No retry */);
-            }, expiresIn);
+          // If being throttled, wait for its expiration and try to run once more.
+          if (expiresIn >= 0) {
+            if (!noRetry) {
+              setTimeout(() => throttle(key, throttleFn, ttl, true /* No retry */), expiresIn);
+            }
+          } else {
+            throttleFn();
           }
-        } else {
-          throttleFn();
-        }
-      });
-    });
+        });
+      }
+    );
   }
 
   // Create an alias.
